@@ -1,0 +1,113 @@
+/* Colours
+	dark dark blue	#0a2d86
+	dark			#0c5aa5
+	blue			#3CF
+	red 			#b6083b
+ */
+
+body{font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;}
+
+
+/*CONTAINERS*/
+#container_webApp{
+	width: 600px;
+	height: 800px;
+	margin-left:auto;
+	margin-right:auto;
+	background-color:#3CF;
+}
+
+.contentMain{
+	margin-left:auto;
+	margin-right:auto;
+	text-align:justify;
+	width:100px;
+	height:120px;
+	margin-top:20px;
+	}
+
+.content{
+	padding:10px;
+	height:84%;
+	}
+	
+#banner{
+	height:10%;
+	padding:10px;
+	}
+	
+.bannerMain{
+	text-align:center;
+	}
+
+#statsContainer{
+	width:300px;
+	height:500px;
+	background-color:#CCC;
+	overflow:scroll;
+	
+	;
+	}
+.statsCol{
+	background-color:#666;
+	margin:2px;
+	}	
+
+/*IMG*/
+#imgMain{
+	margin-top:30px;
+	margin-right:auto;
+	margin-left:auto;
+	height:134px;
+	width:150px;
+	}
+
+/*TEXT*/
+h1{	display: inline;
+	font-size:30px;
+	margin-before:0em;
+	margin-after: 0em;
+	margin-start: 0;
+	margin-end: 0;	
+	font-weight: bold;
+	}
+	
+h2{	display: inline;
+	font-size:28px;
+	margin-before:0em;
+	margin-after: 0em;
+	margin-start: 0;
+	margin-end: 0;	
+	font-weight: bold;
+	}
+	
+h3{	display: inline;
+	font-size:16px;
+	margin-before:0em;
+	margin-after: 0em;
+	margin-start: 0;
+	margin-end: 0;	
+	font-weight: bold;
+	}
+
+
+/*TABLE*/
+table td{
+	padding:3px;
+	}
+	
+/*FORM*/	
+label{
+	color:#fff;
+	}
+	
+.button{
+	margin-top:8px;
+	width:100%;
+	}
+	
+/*CANVAS*/
+.scores{
+	height:40px;
+	width:400px
+	}
