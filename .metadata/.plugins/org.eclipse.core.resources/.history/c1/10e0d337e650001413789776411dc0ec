@@ -1,0 +1,11 @@
+
+<?xml version="1.0" encoding="utf-8"?> 
+<selector xmlns:android="http://schemas.android.com/apk/res/android" > 
+    <item android:state_pressed="true" // these indicates that button is pressed 
+        android:drawable="@color/white"> //these is the background image when button is pressed 
+    </item> 
+    
+    <item android:drawable="@color/red"> //these is the normal state of button when it is not pressed. And the background is provided when it is not pressed. 
+    </item> 
+    
+    </selector>
