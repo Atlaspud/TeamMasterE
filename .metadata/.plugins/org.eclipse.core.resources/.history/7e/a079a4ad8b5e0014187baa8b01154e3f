@@ -1,0 +1,76 @@
+package au.edu.jcu.mongohq;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+
+import android.os.AsyncTask;
+
+import com.mongodb.BasicDBList;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+
+public class GetTeamsAsyncTask extends AsyncTask<Team, Void, ArrayList<Team>> {
+	static BasicDBObject user = null;
+	static String OriginalObject = "";
+	static String server_output = null;
+	static String temp_output = null;
+
+	@Override
+	protected ArrayList<Team> doInBackground(Team... arg0) {
+		
+		ArrayList<Team> myTeams = new ArrayList<Team>();
+		try 
+		{			
+			
+			QueryBuilder qb = new QueryBuilder();						
+	        URL url = new URL(qb.buildContactsGetURL());
+	        HttpURLConnection conn = (HttpURLConnection) url
+					.openConnection();
+	        conn.setRequestMethod("GET");
+			conn.setRequestProperty("Accept", "application/json");
+
+			if (conn.getResponseCode() != 200) {
+				throw new RuntimeException("Failed : HTTP error code : "
+						+ conn.getResponseCode());
+			}
+
+			BufferedReader br = new BufferedReader(new InputStreamReader(
+					(conn.getInputStream())));
+
+			while ((temp_output = br.readLine()) != null) {
+				server_output = temp_output;
+			}
+			
+            // create a basic db list
+			String mongoarray = "{ artificial_basicdb_list: "+server_output+"}";
+			Object o = com.mongodb.util.JSON.parse(mongoarray);
+			
+
+			DBObject dbObj = (DBObject) o;
+			BasicDBList teams = (BasicDBList) dbObj.get("artificial_basicdb_list");
+			
+		  for (Object obj : teams) {
+			DBObject userObj = (DBObject) obj; 
+			
+			Team temp = new Team(); 
+//			temp.setDoc_id(userObj.get("_id").toString());
+//			temp.setFirst_name(userObj.get("first_name").toString());
+//			temp.setLast_name(userObj.get("last_name").toString());
+//			temp.setEmail(userObj.get("email").toString());
+//			temp.setPhone(userObj.get("phone").toString());
+			temp.setTeamID(Integer.parseInt(userObj.get("team_id").toString()));
+			temp.setTeamName(userObj.get("team_name").toString());
+			myTeams.add(temp);
+			
+			}
+		
+		}catch (Exception e) {
+			e.getMessage();
+		}
+		
+		return myTeams; 
+	}
+}

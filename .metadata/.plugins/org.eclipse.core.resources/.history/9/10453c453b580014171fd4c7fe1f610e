@@ -1,0 +1,44 @@
+package au.edu.jcu.bowlinggame;
+
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.view.*;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+
+public class MainMenuFragment extends Fragment implements OnClickListener {
+	
+	Button viewStats;
+	Button newMatch;
+	Button loadMatch;
+	
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		View rootView = inflater.inflate(R.layout.main_menu_fragment, container,
+				false);
+		
+		viewStats = (Button) rootView.findViewById(R.id.mainMenuViewStatsBtn);
+		viewStats.setOnClickListener(this);
+		
+		return rootView;
+	}
+
+	@Override
+	public void onClick(View v) {
+		
+		Button btn = (Button) v;
+		String btnLabel = btn.getText().toString();
+		FragmentTransaction transaction = getFragmentManager().beginTransaction();
+		
+		if (btnLabel.contains("NEW MATCH")) {
+			
+		} else if (btnLabel.contains("LOAD MATCH")) {
+			
+		} else if (btnLabel.contains("VIEW STATS")) {
+			transaction.setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out);
+			transaction.replace(R.id.container, new );			
+		}
+		
+	};
+
+}

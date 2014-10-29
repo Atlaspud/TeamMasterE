@@ -1,0 +1,69 @@
+package au.edu.jcu.bowlinggame;
+
+import java.util.Set;
+
+import com.mongodb.*;
+
+public class MongoDB {
+	
+	// username = admin
+	// password = 1234
+	// Database is called Bowling
+	// Collection is the sub-databases called Teams for example
+	
+	// Using compose.io
+	// username = chrislord@internode.on.net
+	// password = G6jp6bt4f
+	
+	
+	
+	public MongoDB() {
+		System.out.println("start");
+		try {
+			//connect to the local database server
+			String dbURI = "mongodb://admin:1234@linus.mongohq.com:10047/Bowling";
+			MongoClient mongoClient = new MongoClient(new MongoClientURI(dbURI));
+			System.out.println("Connection Success");
+			
+			DB db = mongoClient.getDB("Bowling");
+			System.out.println(db);
+			
+			Set<String> collection = db.getCollectionNames();
+			System.out.println(collection);
+			
+			DBCollection coll = db.getCollection("Teams");
+			System.out.println(coll);
+			
+			BasicDBObject doc =  new BasicDBObject("name", "MongoDB")
+			.append("type", "database");
+			
+			coll.insert(doc);
+			
+			DBObject mydoc = coll.findOne();
+			
+			System.out.println(mydoc);
+			
+			System.out.println(coll.getCount());
+			
+			
+			
+//			List<String> databases = mongoClient.getDatabaseNames();
+//			for (String dbName : databases){
+//				System.out.println("Database: " + dbName);
+//				
+//				DB db = mongoClient.getDB(dbName);
+//				
+//				Set<String> collections = db.getCollectionNames();
+//				for (String colName : collections){
+//					System.out.println("\t + Collection: " + colName);
+//				}
+//				
+//				
+//			}
+			mongoClient.close();
+		} catch (Exception e) {
+			System.out.println("Fail");
+		}
+		
+	}
+}

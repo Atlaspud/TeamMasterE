@@ -1,0 +1,35 @@
+package au.edu.jcu.model;
+
+import java.util.ArrayList;
+
+public class Scores {
+	
+	private int player_id;
+	private ArrayList<Integer> scores;
+	
+	public Scores() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Scores(int playerID) {
+		
+		this.player_id = playerID;
+	}
+	
+	public void addScore(int score) {
+		this.scores.add(score);
+	}
+	
+	public ArrayList<Integer> getScores() {
+		return this.scores;
+	}
+	
+	public void setScore(ArrayList<Integer> scores) {
+		this.scores = scores;
+	}
+	
+	public int getPlayerID() {
+		return this.player_id;
+	}
+
+}

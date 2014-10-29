@@ -1,0 +1,26 @@
+package au.edu.jcu.bowlinggame;
+
+import java.net.UnknownHostException;
+
+import com.mongodb.*;
+
+public class MongoDB {
+	
+	Mongo mongo;
+	DB db;
+	
+	String name = "blah";
+	char[] password = {'b','l','a','h'};
+	
+	public MongoDB() {
+		try {
+			mongo = new Mongo("172.234.52.24",23455);
+			db = mongo.getDB("myDB");
+			db.authenticate(name, password);
+		} catch (UnknownHostException e) {
+			
+			e.printStackTrace();
+		}
+		
+	}
+}

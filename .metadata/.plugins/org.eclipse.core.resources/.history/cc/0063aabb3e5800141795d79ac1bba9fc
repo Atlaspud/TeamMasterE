@@ -1,0 +1,22 @@
+package au.edu.jcu.bowlinggame;
+
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+
+public class ViewStatsMenuFragment extends Fragment {
+	
+	Button teamBtn;
+	Button weeklyBtn;
+	
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		View rootView = inflater.inflate(R.layout.view_stats_dialog_box, container,
+				false);
+		
+		return rootView;
+	};
+
+}

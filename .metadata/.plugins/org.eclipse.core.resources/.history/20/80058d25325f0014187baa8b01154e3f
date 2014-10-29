@@ -1,0 +1,89 @@
+package au.edu.jcu.playgame;
+
+import java.util.ArrayList;
+
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Point;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.Display;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import au.edu.jcu.bowlinggame.R;
+
+public class Card extends Fragment {
+
+	int width;
+	int height;
+	int textSize;
+	boolean selected = false;
+	MyView myView;
+	
+	ArrayList<Integer> scores;
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		
+		Display display = this.getActivity().getWindowManager().getDefaultDisplay();
+		Point size = new Point();
+		display.getSize(size);
+		width = size.x;
+		height = size.y;
+		textSize = this.getActivity().getApplicationContext().getResources()
+						.getDimensionPixelSize(R.dimen.custom_text_size);
+		myView = new MyView(this.getActivity());
+		scores = new ArrayList<Integer>();
+		System.out.println(MainGameActivity.team_one.getTeamName() + " " + MainGameActivity.team_two.getTeamName());
+		
+		return myView;
+	}
+	
+	private class MyView extends View {
+
+		private Paint paint;
+		
+		public MyView(Context context) {
+			super(context);
+			paint = new Paint();
+			invalidate();
+		}
+		
+		protected void onDraw(Canvas canvas) {
+			super.onDraw(canvas);
+			
+			if (selected == true) {
+				paint.setColor(Color.GREEN);
+			} else {
+				paint.setColor(Color.BLACK);
+			}
+			paint.setStrokeWidth(10);
+			canvas.drawLine(50, 120, (width - 50), 120, paint);
+			canvas.drawLine(50, 120, 50, (height - 130), paint);
+			canvas.drawLine(50, (height - 130), (width - 50), (height - 130), paint);
+			canvas.drawLine((width - 50), 120, (width - 50), (height - 130), paint);
+			
+			paint.setColor(Color.BLACK);
+			paint.setAlpha(180);
+			canvas.drawRect(50, 120, (width - 50), (height - 130), paint);
+			paint.setAlpha(255);
+			
+			paint.setColor(Color.WHITE);
+			paint.setTextSize(textSize);
+			int xPosition = 90;
+			int yPosition = 240;
+			for (int i = 0; i < scores.size(); i++) {
+				canvas.drawText("" + scores.get(i), xPosition, yPosition, paint);
+				xPosition += textSize*1.5;
+				if (xPosition > width - 160) {
+					xPosition = 90;
+					yPosition += textSize*1.5;
+				}
+			}
+		}
+	}
+}

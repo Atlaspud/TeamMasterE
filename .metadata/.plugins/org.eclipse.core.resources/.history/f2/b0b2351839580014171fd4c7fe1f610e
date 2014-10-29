@@ -1,0 +1,7 @@
+package au.edu.jcu.bowlinggame;
+
+import android.support.v4.app.Fragment;
+
+public class ViewStatsMenu extends Fragment {
+
+}

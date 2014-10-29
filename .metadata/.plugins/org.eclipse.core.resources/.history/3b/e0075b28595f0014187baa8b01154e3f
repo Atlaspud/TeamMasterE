@@ -1,0 +1,121 @@
+package au.edu.jcu.playgame;
+
+import java.util.ArrayList;
+
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Point;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.Display;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import au.edu.jcu.bowlinggame.R;
+import au.edu.jcu.model.Player;
+import au.edu.jcu.model.Score;
+
+public class Card extends Fragment {
+
+	int width;
+	int height;
+	int textSize;
+	boolean selected = false;
+	MyView myView;
+	int match_id;
+	
+	ArrayList<Score> scores;
+	ArrayList<Player> currentPlayers;
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		
+		Display display = this.getActivity().getWindowManager().getDefaultDisplay();
+		Point size = new Point();
+		display.getSize(size);
+		width = size.x;
+		height = size.y;
+		textSize = this.getActivity().getApplicationContext().getResources()
+						.getDimensionPixelSize(R.dimen.custom_text_size);
+		myView = new MyView(this.getActivity());
+		scores = new ArrayList<Score>();
+		match_id = getMatchID();
+		setupScores();
+		return myView;
+	}
+	
+	public int getMatchID() {
+		return 1;
+	}
+	
+	public void setupScores() {
+		for(int i = 1; i < 9; i++) {
+			Score temp = new Score(i);
+			for (int j = 0; j < 21; j++) {
+				temp.addScore(9);
+			}
+			scores.add(temp);
+			System.out.println(temp.toString());
+		}
+	}
+	
+	private class MyView extends View {
+
+		private Paint paint;
+		
+		public MyView(Context context) {
+			super(context);
+			paint = new Paint();
+			invalidate();
+		}
+		
+		protected void onDraw(Canvas canvas) {
+			super.onDraw(canvas);
+			
+			paint.setColor(Color.BLACK);
+			paint.setTextSize(50);
+			int xPosition = 100;
+			int yPosition = 465;
+			
+			// Team names
+			canvas.drawText("" + MainGameActivity.team_one.getTeamName(), 90, 240, paint);
+			canvas.drawText("" + MainGameActivity.team_two.getTeamName(), 400, 240, paint);
+			
+			// Team one player names
+			paint.setTextSize(30);
+			ArrayList<Player> playerList =  MainGameActivity.team_one.getPlayers();
+			for (int i = 0; i < 4; i++) {
+				String playerName = playerList.get(i).getPlayerName();
+				canvas.drawText(playerName, xPosition, yPosition, paint);
+				yPosition += 63;
+			}
+			
+			// Team two player names
+			playerList =  MainGameActivity.team_two.getPlayers();
+			for (int i = 0; i < 4; i++) {
+				String playerName = playerList.get(i).getPlayerName();
+				canvas.drawText(playerName, xPosition, yPosition, paint);
+				yPosition += 63;
+			}
+			
+			// player scores
+			paint.setTextSize(20);
+			yPosition = 443;
+			for (int i = 0; i < 8; i++) {
+				xPosition = 276;
+				Score temp = scores.get(i);
+				ArrayList<Integer> tempScores = temp.getScores();
+				for (int j = 0; j < 21; j++) {
+					canvas.drawText("" + tempScores.get(j) , xPosition, yPosition, paint);
+					xPosition += 31;
+				}
+				yPosition += 63;
+			}
+			
+		}
+		
+	}
+}

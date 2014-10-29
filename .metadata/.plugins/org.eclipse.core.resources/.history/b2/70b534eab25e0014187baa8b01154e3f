@@ -1,0 +1,73 @@
+package au.edu.jcu.bowlinggame;
+
+import java.util.ArrayList;
+
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import au.edu.jcu.model.Player;
+import au.edu.jcu.mongohq.GetPlayersAsyncTask;
+
+public class NewTeamFragment extends Fragment implements OnClickListener {
+	
+	Button back;
+	Button done;
+	EditText teamName;
+	EditText playerNameOne;
+	EditText playerNameTwo;
+	EditText playerNameThree;
+	EditText playerNameFour;
+	
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		View rootView = inflater.inflate(R.layout.new_team_fragment, container,
+				false);
+		
+		back = (Button) rootView.findViewById(R.id.new_team_back_btn);
+		back.setOnClickListener(this);
+		done = (Button) rootView.findViewById(R.id.new_team_done_btn);
+		done.setOnClickListener(this);
+		
+		teamName = (EditText) rootView.findViewById(R.id.newTeamTxt);
+		playerNameOne = (EditText) rootView.findViewById(R.id.playerNameOneTxt);
+		playerNameTwo = (EditText) rootView.findViewById(R.id.playerNameTwoTxt);
+		playerNameThree = (EditText) rootView.findViewById(R.id.playerNameThreeTxt);
+		playerNameFour = (EditText) rootView.findViewById(R.id.playerNameFourTxt);
+		
+		return rootView;
+	}
+
+	@Override
+	public void onClick(View v) {
+		
+		Button btn = (Button) v;
+		String btnLabel = btn.getText().toString();
+		FragmentTransaction transaction = getFragmentManager().beginTransaction();
+		
+		if (btnLabel.contains("Back")) {
+			System.out.println("Back");
+			transaction.replace(R.id.container, new MainMenuFragment());
+		} else if (btnLabel.contains("New Team")) {
+			System.out.println("New Team");
+		}
+		
+		transaction.commit();
+	};
+	
+	public void saveTeamName() {
+		GetPlayersAsyncTask tsk = new GetPlayersAsyncTask();
+		try{
+		ArrayList<Player> players = tsk2.execute().get();
+			for (Player p : players) {
+				System.out.println(p.getPlayerID() + " " + p.getPlayerName() + " " + p.getTeamID());
+			}
+		} catch (Exception e) {
+		
+		}
+	}
+}

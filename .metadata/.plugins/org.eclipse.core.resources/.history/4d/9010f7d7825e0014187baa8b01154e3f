@@ -1,0 +1,15 @@
+package au.edu.jcu.mongohq;
+
+public class player {
+	
+	private String player_name;
+	
+	public player() {
+		player_name = "unknown";
+	}
+	
+	public pla() {
+		player_name = "unknown";
+	}
+
+}

@@ -1,0 +1,64 @@
+package au.edu.jcu.bowlinggame;
+
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.Button;
+
+public class NewMatchScreenOneFragment extends Fragment implements OnClickListener {
+	
+	Button back;
+	Button newTeam;
+	
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		View rootView = inflater.inflate(R.layout.new_match_menu_fragment_one, container,
+				false);
+		
+		back = (Button) rootView.findViewById(R.id.new_match_back_one_btn);
+		back.setOnClickListener(this);
+		newTeam = (Button) rootView.findViewById(R.id.new_match_new_team_one_btn);
+		newTeam.setOnClickListener(this);
+		
+		return rootView;
+	}
+
+	@Override
+	public void onClick(View v) {
+		
+		Button btn = (Button) v;
+		String btnLabel = btn.getText().toString();
+		FragmentTransaction transaction = getFragmentManager().beginTransaction();
+		
+		if (btnLabel.contains("NEW MATCH")) {
+			System.out.println("New Match");			
+		} else if (btnLabel.contains("LOAD MATCH")) {
+			System.out.println("Load Match");
+		} else if (btnLabel.contains("VIEW STATS")) {
+			transaction.add(R.id.container, new ViewStatsMenuFragment());
+		}
+		
+		transaction.commit();
+		
+	};
+
+}
+
+//System.out.println("Test Save Player");
+//Player player = new Player("Fred", 1, 1);
+//SavePlayerAsyncTask tsk = new SavePlayerAsyncTask();
+//tsk.execute(player);
+//
+//System.out.println("Test load Player");
+//GetPlayersAsyncTask tsk2 = new GetPlayersAsyncTask();
+//try{
+//	ArrayList<Player> players = tsk2.execute().get();
+//	for (Player p : players) {
+//		System.out.println(p.getPlayerID() + " " + p.getPlayerName() + " " + p.getTeamID());
+//	}
+//} catch (Exception e) {
+//	
+//}

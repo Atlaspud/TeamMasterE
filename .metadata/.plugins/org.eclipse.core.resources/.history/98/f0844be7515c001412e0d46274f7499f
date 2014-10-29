@@ -1,0 +1,10 @@
+package au.edu.jcu.bowlinggame;
+
+
+public class MongoDB {
+	
+	public MongoDB() {
+		
+		
+	}
+}

@@ -1,0 +1,74 @@
+package au.edu.jcu.bowlinggame;
+
+import java.util.ArrayList;
+
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.Button;
+import au.edu.jcu.model.Player;
+import au.edu.jcu.model.Team;
+import au.edu.jcu.mongohq.GetTeamsAsyncTask;
+import au.edu.jcu.mongohq.SaveTeamAsyncTask;
+
+public class MainMenuFragment extends Fragment implements OnClickListener {
+	
+	Button viewStats;
+	Button newMatch;
+	Button loadMatch;
+	
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		View rootView = inflater.inflate(R.layout.main_menu_fragment, container,
+				false);
+		
+		newMatch = (Button) rootView.findViewById(R.id.mainMenuNewMatchBtn);
+		newMatch.setOnClickListener(this);
+		loadMatch = (Button) rootView.findViewById(R.id.mainMenuLoadMatchBtn);
+		loadMatch.setOnClickListener(this);
+		viewStats = (Button) rootView.findViewById(R.id.mainMenuViewStatsBtn);
+		viewStats.setOnClickListener(this);
+		
+		return rootView;
+	}
+
+	@Override
+	public void onClick(View v) {
+		
+		Button btn = (Button) v;
+		String btnLabel = btn.getText().toString();
+		FragmentTransaction transaction = getFragmentManager().beginTransaction();
+		
+		if (btnLabel.contains("NEW MATCH")) {
+			System.out.println("New Match");
+			
+			System.out.println("Test Save Player");
+			Player player = new Player("Fred", 1, 1);
+			SaveTeamAsyncTask tsk = new SaveTeamAsyncTask();
+			tsk.execute(player);
+			
+			System.out.println("Test load Team");
+			GetTeamsAsyncTask tsk2 = new GetTeamsAsyncTask();
+			try{
+				ArrayList<Team> teams = tsk2.execute().get();
+				for (Team t : teams) {
+					System.out.println(t.getTeamID() + " " + t.getTeamName());
+				}
+			} catch (Exception e) {
+				
+			}
+			
+		} else if (btnLabel.contains("LOAD MATCH")) {
+			System.out.println("Load Match");
+		} else if (btnLabel.contains("VIEW STATS")) {
+			transaction.add(R.id.container, new ViewStatsMenuFragment());
+		}
+		
+		transaction.commit();
+		
+	};
+
+}

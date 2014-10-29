@@ -1,0 +1,181 @@
+package au.edu.jcu.playgame;
+
+import java.util.ArrayList;
+
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Point;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.view.Display;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import au.edu.jcu.bowlinggame.R;
+import au.edu.jcu.model.Player;
+import au.edu.jcu.model.Score;
+
+public class Card extends Fragment implements OnClickListener {
+
+	int width;
+	int height;
+	int textSize;
+	boolean selected = false;
+	MyView myView;
+	int match_id;
+	int playerBowlTurn = 1;
+	Button backBtn;
+	Button addScoreBtn;
+	Button doneBtn;
+	EditText scoreTxt;
+	
+	ArrayList<Score> scores;
+	ArrayList<Player> currentPlayers;
+	String [] acceptableScoreEntries = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "X", "/"};
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		
+		Display display = this.getActivity().getWindowManager().getDefaultDisplay();
+		Point size = new Point();
+		display.getSize(size);
+		width = size.x;
+		height = size.y;
+		textSize = this.getActivity().getApplicationContext().getResources()
+						.getDimensionPixelSize(R.dimen.custom_text_size);
+		myView = new MyView(this.getActivity());
+		scores = new ArrayList<Score>();
+		match_id = getMatchID();
+		backBtn = (Button) getActivity().findViewById(R.id.cardBackBtn);
+		backBtn.setOnClickListener(this);
+		addScoreBtn = (Button) getActivity().findViewById(R.id.cardAddScoreBtn);
+		addScoreBtn.setOnClickListener(this);
+		doneBtn = (Button) getActivity().findViewById(R.id.cardDoneBtn);
+		doneBtn.setOnClickListener(this);
+		scoreTxt = (EditText) getActivity().findViewById(R.id.cardEnterScoreTxt);
+		initScores();
+
+		return myView;
+	}
+	
+	public int getMatchID() {
+		return 1;
+	}
+	
+	public void initScores() {
+		for(int i = 0; i < 8; i++) {
+			int playerID = currentPlayers.get(i).getPlayerID();
+			Score temp = new Score(playerID);
+			scores.add(temp);
+		}
+	}
+	
+	public void initPlayers() {
+		currentPlayers = new ArrayList<Player>();
+		ArrayList<Player> playerList =  MainGameActivity.team_one.getPlayers();
+		for(int i= 0; i < playerList.size(); i++) {
+			currentPlayers.add(playerList.get(i));
+		}
+		playerList =  MainGameActivity.team_two.getPlayers();
+		for(int i= 0; i < playerList.size(); i++) {
+			currentPlayers.add(playerList.get(i));
+		}
+	}
+	
+	@Override
+	public void onClick(View v) {
+		
+		Button btn = (Button) v;
+		String btnLabel = btn.getText().toString();
+		FragmentTransaction transaction = getFragmentManager().beginTransaction();
+		
+		if (btnLabel.contains("Back")) {
+			System.out.println("back Button Pressed");
+		} else if (btnLabel.contains("Add Score")) {
+			System.out.println("Add Score");
+			if (!scoreTxt.getText().toString().contentEquals("")) {
+				processEnteredScore();
+			}
+		} else if (btnLabel.contains("Done")) {
+			System.out.println("Done");
+		}
+		
+		transaction.commit();
+	}
+	
+	public boolean processEnteredScore() {
+		String enteredScore = scoreTxt.getText().toString();
+		scoreTxt.setText("");
+		for (int i = 0; i < acceptableScoreEntries.length; i++) {
+			if(enteredScore.contentEquals(acceptableScoreEntries[i])) {
+				return false;
+			}
+		}
+		scores.get(playerBowlTurn).addScore(enteredScore);
+		if (playerBowlTurn <= 8) {
+			playerBowlTurn++;
+		} else {
+			playerBowlTurn = 1;
+		}
+		return true;
+	}
+	
+	/// Inner Class
+	
+	private class MyView extends View {
+
+		private Paint paint;
+		
+		public MyView(Context context) {
+			super(context);
+			paint = new Paint();
+			invalidate();
+		}
+		
+		protected void onDraw(Canvas canvas) {
+			super.onDraw(canvas);
+			
+			paint.setColor(Color.BLACK);
+			paint.setTextSize(50);
+			int xPosition = 100;
+			int yPosition = 465;
+			
+			// Team names
+			canvas.drawText("" + MainGameActivity.team_one.getTeamName(), 90, 240, paint);
+			canvas.drawText("" + MainGameActivity.team_two.getTeamName(), 400, 240, paint);
+			
+			// Player names
+			paint.setTextSize(30);
+			if (!currentPlayers.isEmpty()) {
+				for (int i = 0; i < currentPlayers.size(); i++) {
+					String playerName = currentPlayers.get(i).getPlayerName();
+					canvas.drawText(playerName, xPosition, yPosition, paint);
+					yPosition += 63;
+				}
+			}
+			
+			// player scores
+			paint.setTextSize(20);
+			yPosition = 443;
+			for (int i = 0; i < scores.size(); i++) {
+				xPosition = 276;
+				Score temp = scores.get(i);
+				ArrayList<String> tempScores = temp.getScores();
+				for (int j = 0; j < tempScores.size(); j++) {
+					canvas.drawText("" + tempScores.get(j) , xPosition, yPosition, paint);
+					xPosition += 31;
+				}
+				yPosition += 63;
+			}
+			
+		}
+		
+	}
+}

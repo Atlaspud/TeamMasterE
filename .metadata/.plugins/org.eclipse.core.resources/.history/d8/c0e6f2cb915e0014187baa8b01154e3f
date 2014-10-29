@@ -1,0 +1,7 @@
+package au.edu.jcu.mongohq;
+
+import android.os.AsyncTask;
+
+public class SavePlayerAsyncTask extends AsyncTask<Params, Progress, Result> {
+
+}

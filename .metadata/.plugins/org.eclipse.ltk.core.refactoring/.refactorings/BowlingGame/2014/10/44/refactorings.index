@@ -1,0 +1,42 @@
+1414487679052	Rename type 'player'
+1414489220180	Rename type 'GetContactsAsyncTask'
+1414491196138	Delete element
+1414491446075	Rename type 'SaveAsyncTask'
+1414491473638	Rename type 'QueryBuilder'
+1414491712716	Move compilation unit
+1414491717352	Move compilation unit
+1414491757101	Rename type 'UpdateTeams'
+1414493684663	Delete element
+1414494063559	Rename type 'GetPlayerAsync'
+1414494078294	Rename type 'SaveTeamsAsyncTask'
+1414494220679	Copy compilation unit
+1414497306345	Rename field 'button1'
+1414497331084	Rename field 'button2'
+1414497473522	Rename resource 'new_match_menu_fragment.xml'
+1414497510378	Copy file
+1414497537485	Rename field 'new_match_new_team_btn'
+1414497548779	Rename field 'new_match_back_btn'
+1414497612654	Rename field 'new_match_back_one_btn'
+1414497869357	Copy compilation unit
+1414505567717	Copy file
+1414505919791	Rename resource 'new_player_fragment.xml'
+1414506021885	Rename field 'editText1'
+1414506217933	Copy compilation unit
+1414507211154	Rename field 'button2'
+1414507241879	Rename field 'button1'
+1414544212463	Copy compilation unit
+1414546901241	Delete element
+1414546914839	Copy compilation unit
+1414558625958	Copy compilation unit
+1414558656280	Rename type 'MainActivity'
+1414561105562	Copy file
+1414563520481	Rename field 'container'
+1414563545856	Rename field 'containerGame'
+1414566152601	Rename resource 'bowling-score-sheet.jpg'
+1414575808923	Rename type 'Scores'
+1414582155283	Rename field 'button1'
+1414582162116	Rename field 'carBackBtn'
+1414582180151	Rename field 'button2'
+1414582237209	Rename field 'button3'
+1414582256242	Rename field 'editText1'
+1414604038143	Delete element

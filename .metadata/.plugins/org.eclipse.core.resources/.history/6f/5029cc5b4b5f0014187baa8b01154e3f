@@ -1,0 +1,12 @@
+package au.edu.jcu.model;
+
+public class Match {
+	
+	int team_id;
+	int match_id;
+	
+	public Match(int matchID) {
+		
+	}
+
+}

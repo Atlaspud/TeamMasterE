@@ -1,0 +1,47 @@
+package au.edu.jcu.bowlinggame;
+
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.Button;
+
+public class MainMenuFragment extends Fragment implements OnClickListener {
+	
+	Button viewStats;
+	Button newMatch;
+	
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		View rootView = inflater.inflate(R.layout.main_menu_fragment, container,
+				false);
+		
+		newMatch = (Button) rootView.findViewById(R.id.mainMenuNewMatchBtn);
+		newMatch.setOnClickListener(this);
+		viewStats = (Button) rootView.findViewById(R.id.mainMenuViewStatsBtn);
+		viewStats.setOnClickListener(this);
+		
+		return rootView;
+	}
+
+	@Override
+	public void onClick(View v) {
+		
+		Button btn = (Button) v;
+		String btnLabel = btn.getText().toString();
+		FragmentTransaction transaction = getFragmentManager().beginTransaction();
+		
+		if (btnLabel.contains("NEW MATCH")) {
+			transaction.setCustomAnimations(R.anim.left_to_right, R.anim.right_to_left);
+			transaction.replace(R.id.container, new NewMatchScreenOneFragment());
+		} else if (btnLabel.contains("VIEW STATS")) {
+			transaction.add(R.id.container, new ViewStatsMenuFragment());
+		}
+		
+		transaction.commit();
+		
+	};
+
+}

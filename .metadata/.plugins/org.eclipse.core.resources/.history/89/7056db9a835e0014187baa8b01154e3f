@@ -1,0 +1,17 @@
+package au.edu.jcu.mongohq;
+
+public class Player {
+	
+	private String player_name;
+	
+	public Player() {
+		this.player_name = "unknown";
+	}
+	
+	public Player(String playerName) {
+		this.player_name = playerName;
+	}
+	
+	
+
+}

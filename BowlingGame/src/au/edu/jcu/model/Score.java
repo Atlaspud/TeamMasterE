@@ -1,0 +1,36 @@
+package au.edu.jcu.model;
+
+import java.util.ArrayList;
+
+public class Score {
+	
+	private int player_id;
+	private ArrayList<String> scores;
+	
+	public Score(int playerID) {
+		
+		this.player_id = playerID;
+		scores = new ArrayList<String>();
+	}
+	
+	public void addScore(String score) {
+		this.scores.add(score);
+	}
+	
+	public ArrayList<String> getScores() {
+		return this.scores;
+	}
+	
+	public void setScore(ArrayList<String> scores) {
+		this.scores = scores;
+	}
+	
+	public void removeLastScore() {
+		this.scores.remove(this.scores.size() - 1);
+	}
+	
+	public int getPlayerID() {
+		return this.player_id;
+	}
+
+}

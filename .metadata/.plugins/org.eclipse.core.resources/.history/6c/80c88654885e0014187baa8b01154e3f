@@ -1,0 +1,93 @@
+package au.edu.jcu.mongohq;
+
+public class QueryBuilder {
+	
+	/**
+	 * Specify your database name here
+	 * @return
+	 */
+	public String getDatabaseName() {
+		return "androidconnect";
+	}
+
+	/**
+	 * Specify your MongoLab API here
+	 * @return
+	 */
+	public String getApiKey() {
+		return "HsVuu-XP4lXdFVFE-1pXFqJJK9BiUmW9";
+	}
+	
+	/**
+	 * This constructs the URL that allows you to manage your database, 
+	 * collections and documents
+	 * @return
+	 */
+	public String getBaseUrl()
+	{
+		return "https://api.mongolab.com/api/1/databases/"+getDatabaseName()+"/collections/";
+	}
+	
+	/**
+	 * Completes the formating of your URL and adds your API key at the end
+	 * @return
+	 */
+	public String docApiKeyUrl()
+	{
+		return "?apiKey="+getApiKey();
+	}
+	
+	/**
+	 * Returns the Teams collection
+	 * @return
+	 */
+	public String documentRequest()
+	{
+		return "teams";
+	}
+	
+	/**
+	 * Builds a complete URL using the methods specified above
+	 * @return
+	 */
+	public String buildContactsSaveURL()
+	{
+		return getBaseUrl()+documentRequest()+docApiKeyUrl();
+	}
+	
+	public String buildContactsGetURL()
+	{
+		return getBaseUrl()+documentRequest()+docApiKeyUrl();
+	}
+	
+	public String buildContactsUpdateURL(String doc_id)
+	{
+		return getBaseUrl()+documentRequest()+docApiKeyUrl(doc_id);
+	}
+	
+	public String createTeam(int teamID, String teamName)
+	{
+		return String.format("{\"team_id\" : \"%d\", \"team_name\" : \"%s\"}", teamID, teamName);
+	}
+	
+	public String setTeamName(Team team) {
+		return String.format("{\"$set\" : "
+				+ "{\"team_id\" : \"%d\", "
+				+ "\"team_name\" : \"%s\"}}", 
+				team.getTeamID(), team.getTeamName());
+	}
+	
+//	public String setContactData(Team team) {
+//		return String.format("{ \"$set\" : " 
+//				+ "{\"first_name\" : \"%s\", "
+//				+ "\"last_name\" : \"%s\", "
+//				+ "\"email\" : \"%s\", "
+//				+ "\"phone\" : \"%s\" }" + "}",
+//				contact.getFirst_name(), 
+//				contact.getLast_name(), contact.getEmail(),
+//				contact.getPhone());
+//	}
+	
+	
+
+}
